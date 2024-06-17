@@ -37,7 +37,7 @@ progress.progress-timer::-webkit-progress-value {
 }
 
 progress.progress-timer.selected::-webkit-progress-value {
-    background-color: rgb(98, 98, 5);
+    background-color: lightblue;
     border-radius: 15px;
 }
 
@@ -67,7 +67,7 @@ ul {
     margin: 0 auto;
     justify-content: center;
     align-items: center;
-    background-color: red;
+    
 }
 
 .answer-btn {
