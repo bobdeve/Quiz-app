@@ -7,7 +7,7 @@ import {faStopwatch} from "@fortawesome/free-solid-svg-icons";
 
 export default function Answers({ index, handleAnswer, answerStatus }) {
   const answers = useRef();
-  const [remainingTime, setRemainingTime] = useState(10)
+  const [remainingTime, setRemainingTime] = useState(20)
 
 
   if (!answers.current) {
@@ -92,10 +92,10 @@ export default function Answers({ index, handleAnswer, answerStatus }) {
   
   let question = decodeHTMLEntities(quizData[index].question)
   let stopwatchClass = 'stopwatch-icon'
-  if(remainingTime >= 4 && remainingTime <=7){
+  if(remainingTime >= 7 && remainingTime <=12){
     stopwatchClass = 'stopwatch-icon yellow'
   }
-  if(remainingTime >= 0 && remainingTime <=3) {
+  if(remainingTime >= 0 && remainingTime <=6) {
     stopwatchClass = 'stopwatch-icon red'
   }
   return (
