@@ -12,7 +12,7 @@ export default function Questions({index, onUserAnswer, onSkip}) {
     answerClassStatus: 'answer-btn'
   })
 
-  let timer = 10000
+  let timer = 20000
   if(currentAnswer.selectedAnswer !== ""){
     timer = 1000
   }
