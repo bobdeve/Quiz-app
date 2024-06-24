@@ -1,10 +1,9 @@
 import React, { useState,useEffect } from 'react'
 
-export default function ProgressBars({timer, onSkip, classStatus,currentAnswer}) {
+export default function ProgressBars({timer, onSkip, classStatus}) {
   const [remainingTime,setRemainingTime] = useState(timer)
  
-  console.log(currentAnswer)
-  console.log(true)
+
    useEffect(() => {
      const timeOut = setTimeout(() => {
       onSkip()

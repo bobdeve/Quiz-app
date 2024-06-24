@@ -1,10 +1,12 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useState,useContext } from 'react'
 import ProgressBars from './ProgressBars'
 import Answers from './Answers'
 import quizData from '../quizData'
+import { DataContext } from './DataContext'
 
 export default function Questions({index, onUserAnswer, onSkip}) {
-
+  const {data} =useContext(DataContext)
+console.log(data)
   const [currentAnswer,setCurrentAnswer] = useState({
     selectedAnswer: "",
     isCorrectAnswer: null,
@@ -26,7 +28,7 @@ export default function Questions({index, onUserAnswer, onSkip}) {
   
     setTimeout(() => {
       setCurrentAnswer(prvAns => {
-        return { ...prvAns, isCorrectAnswer: answer === quizData[index].correct_answer ,progressclassStatus: quizData[index].correct_answer === answer? "progress-timer correct" : "progress-timer wrong"};
+        return { ...prvAns, isCorrectAnswer: answer === data[index]?.correct_answer ,progressclassStatus: data[index]?.correct_answer === answer? "progress-timer correct" : "progress-timer wrong"};
       });
   
       setTimeout(() => {
@@ -44,6 +46,7 @@ export default function Questions({index, onUserAnswer, onSkip}) {
       onSkip={currentAnswer.selectedAnswer === ""? onSkip:()=>{}}
       classStatus={currentAnswer.progressclassStatus}
       currentAnswer={currentAnswer}
+     
       />
        <div id='main-quiz'>
     
@@ -53,6 +56,7 @@ export default function Questions({index, onUserAnswer, onSkip}) {
     handleAnswer={handleCurrentAnswer}
     answerStatus={currentAnswer}
     classStatus={currentAnswer.answerClassStatus}
+   
    
     />
 

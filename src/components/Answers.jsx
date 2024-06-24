@@ -1,25 +1,27 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState,useContext } from "react";
 import quizData from "../quizData";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faStopwatch} from "@fortawesome/free-solid-svg-icons";
+import { DataContext } from './DataContext'
 
 export default function Answers({ index, handleAnswer, answerStatus }) {
+  const {data} =useContext(DataContext)
   const answers = useRef();
   const [remainingTime, setRemainingTime] = useState(20)
 
 
   if (!answers.current) {
-    if (quizData[index].type === "multiple") {
+    if (data[index]?.type === "multiple") {
       answers.current = [
-        quizData[index]?.correct_answer,
-        ...quizData[index].incorrect_answers,
+        data[index]?.correct_answer,
+        ...data[index].incorrect_answers,
       ].sort(() => Math.random() - 0.5);
     } else {
       answers.current = [
-        quizData[index]?.correct_answer,
-        quizData[index].incorrect_answers,
+        data[index]?.correct_answer,
+        data[index].incorrect_answers,
       ].sort(() => Math.random() - 0.5);
     }
   }
@@ -27,8 +29,8 @@ export default function Answers({ index, handleAnswer, answerStatus }) {
   useEffect(() => {
     if (answerStatus.isCorrectAnswer !== null) {
       const message = answerStatus.isCorrectAnswer
-        ? `Correct! you answered it ${remainingTime} seconds`
-        : `Incorrect! The Correct answer is => ${quizData[index].correct_answer}`;
+        ? `Correct! you answered it ${20-remainingTime} seconds`
+        : `Incorrect! The Correct answer is => ${data[index]?.correct_answer}`;
       const toastOptions = {
         position: "top-center",
         autoClose: 2800,
@@ -52,7 +54,7 @@ export default function Answers({ index, handleAnswer, answerStatus }) {
   
       toast.error(message, toastOptions);
     }
-  }, [answerStatus, remainingTime, index, quizData]);
+  }, [answerStatus, remainingTime, index, data]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -90,7 +92,7 @@ export default function Answers({ index, handleAnswer, answerStatus }) {
     return text.replace(/&quot;|&#039;/g, match => entities[match]);
   };
   
-  let question = decodeHTMLEntities(quizData[index].question)
+  let question = decodeHTMLEntities(data[index]?.question)
   let stopwatchClass = 'stopwatch-icon'
   if(remainingTime >= 7 && remainingTime <=12){
     stopwatchClass = 'stopwatch-icon yellow'
@@ -115,7 +117,7 @@ export default function Answers({ index, handleAnswer, answerStatus }) {
           if (answerStatus.selectedAnswer === answer && answerStatus.isCorrectAnswer === null) {
             btnClass = "answer-btn selected-answer"
           }
-          if (answerStatus.isCorrectAnswer !== null && answer === quizData[index].correct_answer) {
+          if (answerStatus.isCorrectAnswer !== null && answer === data[index]?.correct_answer) {
             btnClass = "answer-btn correct";
           }
           if (answerStatus.isCorrectAnswer ===false  && answer === answerStatus.selectedAnswer ){

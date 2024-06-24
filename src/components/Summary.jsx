@@ -1,11 +1,15 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import quizData from '../quizData'
+import { DataContext } from './DataContext'
+
 
 
 export const Summary = ({userAnswers,onReset}) => {
+  const {data} =useContext(DataContext)
   console.log(userAnswers)
+  console.log(data)
     let countCorrectAnswer = userAnswers.reduce((acc, answer,index) =>{
-          if(answer === quizData[index].correct_answer){
+          if(answer === data[index]?.correct_answer){
             return ++acc
           }
          return acc
@@ -16,10 +20,10 @@ export const Summary = ({userAnswers,onReset}) => {
           {userAnswers.map((answer, index) => {
             let answerClass = 'summary-text';
             
-            if (answer === quizData[index]?.correct_answer) {
+            if (answer === data[index]?.correct_answer) {
               answerClass += ' correct';
             }
-            if (answer && answer !== quizData[index]?.correct_answer) {
+            if (answer && answer !== data[index]?.correct_answer) {
               answerClass += ' wrong';
             }
             
@@ -30,7 +34,7 @@ export const Summary = ({userAnswers,onReset}) => {
                 <h2 className={answerClass}>
                   {answer !== null ? decodeHTMLEntities(answer) : 'You skipped this question'}
                 </h2>
-                <h3>{decodeHTMLEntities(quizData[index]?.correct_answer)}</h3>
+                <h3>{decodeHTMLEntities(data[index]?.correct_answer)}</h3>
               </div>
             );
           })}
